@@ -17,7 +17,7 @@ public class CarRacerAgent : Agent
         set => maxCollisionCount = value;
     }
 
-    private int collisionCount;
+    private int _collisionCount;
     
     public override void InitializeAgent()
     {
@@ -27,7 +27,7 @@ public class CarRacerAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        this.collisionCount = 0;
+        this._collisionCount = 0;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -44,11 +44,11 @@ public class CarRacerAgent : Agent
             _vehicle.Steering = vectorAction[1];
         }
         
-        if (!IsOnRoad() || collisionCount > this.MaxCollisionCount)
+        if (!IsOnRoad() || _collisionCount > this.MaxCollisionCount)
         {
             SetReward(-1f);
             _vehicle.ResetPos();
-            collisionCount = 0;
+            _collisionCount = 0;
         }
     }
 
@@ -61,6 +61,6 @@ public class CarRacerAgent : Agent
     private void OnCollisionEnter(Collision other)
     {
         AddReward(-1f);
-        collisionCount++;
+        _collisionCount++;
     }
 }
