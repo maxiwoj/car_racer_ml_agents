@@ -1,7 +1,9 @@
+using System;
 using MLAgents;
 using MLAgents.Sensors;
 using UnityEngine;
 using VehicleBehaviour;
+using Random = UnityEngine.Random;
 
 public class CarRacerAgent : Agent
 {
@@ -11,12 +13,8 @@ public class CarRacerAgent : Agent
 
     [SerializeField]
     private int maxCollisionCount;
-    public int MaxCollisionCount
-    {
-        get => maxCollisionCount;
-        set => maxCollisionCount = value;
-    }
-
+    public int MaxCollisionCount { get => maxCollisionCount; set => maxCollisionCount = value; }
+    
     private int _collisionCount;
     
     public override void InitializeAgent()
@@ -54,8 +52,8 @@ public class CarRacerAgent : Agent
 
     private bool IsOnRoad()
     {
-        // TODO: Figure out to check if the vehicle is on the road 
-        return true;
+        const double minTrackHeight = -10;
+        return body.position.y > minTrackHeight;
     }
     
     private void OnCollisionEnter(Collision other)
