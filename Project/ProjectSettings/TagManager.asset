@@ -29,6 +29,10 @@ TagManager:
   - symbol_O_Goal
   - purpleAgent
   - purpleGoal
+  - rail
+  - obstacle
+  - checkpoint
+  - finish
   layers:
   - Default
   - TransparentFX
@@ -39,7 +43,7 @@ TagManager:
   - 
   - 
   - invisible
-  - 
+  - border
   - 
   - 
   - 

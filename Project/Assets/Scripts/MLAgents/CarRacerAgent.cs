@@ -7,6 +7,8 @@ public class CarRacerAgent : Agent
 {
     private Rigidbody body;
     private WheelVehicle _vehicle;
+    private float _startTime;
+    private float _maxEpisodeTime = 90000f;
 
 
     [SerializeField]
@@ -19,7 +21,7 @@ public class CarRacerAgent : Agent
 
     private int collisionCount;
     
-    public override void InitializeAgent()
+    public override void Initialize()
     {
         body = GetComponent<Rigidbody>();
         _vehicle = GetComponent<WheelVehicle>();
@@ -28,16 +30,21 @@ public class CarRacerAgent : Agent
     public override void OnEpisodeBegin()
     {
         this.collisionCount = 0;
+        _vehicle?.ResetPos();
+        _startTime = Time.time;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
+        Debug.Log("Observations collecting");
+
         base.CollectObservations(sensor);
         sensor.AddObservation(body.velocity);
     }
 
     public override void OnActionReceived(float[] vectorAction)
     {
+        Debug.Log("Received action: throttle: " + vectorAction[0] + ", steering: " + vectorAction[1]);
         if (_vehicle != null)
         {
             _vehicle.Throttle = vectorAction[0];
@@ -47,9 +54,16 @@ public class CarRacerAgent : Agent
         if (!IsOnRoad() || collisionCount > this.MaxCollisionCount)
         {
             SetReward(-1f);
-            _vehicle.ResetPos();
+            _vehicle?.ResetPos();
             collisionCount = 0;
         }
+
+        if(Time.time - _startTime > _maxEpisodeTime)
+        {
+            EndEpisode();
+        }
+
+        AddReward(-0.001f);
     }
 
     private bool IsOnRoad()
@@ -58,9 +72,22 @@ public class CarRacerAgent : Agent
         return true;
     }
     
-    private void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision collision)
     {
-        AddReward(-1f);
-        collisionCount++;
+        if (collision.gameObject.CompareTag("checkpoint"))
+        {
+            AddReward(1f);
+        }
+        else if (collision.gameObject.CompareTag("finish"))
+        {
+            AddReward(1f);
+            EndEpisode();
+        }
+        else
+        {
+            Debug.Log("Collision with " + collision.gameObject.tag);
+            AddReward(-0.5f);
+            collisionCount++;
+        }
     }
 }
