@@ -8,7 +8,7 @@ public class CarRacerAgent : Agent
     private Rigidbody body;
     private WheelVehicle _vehicle;
     private float _startTime;
-    private float _maxEpisodeTime = 90000f;
+    private float _maxEpisodeTime = 900f;
 
 
     [SerializeField]
@@ -36,15 +36,12 @@ public class CarRacerAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        Debug.Log("Observations collecting");
-
         base.CollectObservations(sensor);
         sensor.AddObservation(body.velocity);
     }
 
     public override void OnActionReceived(float[] vectorAction)
     {
-        Debug.Log("Received action: throttle: " + vectorAction[0] + ", steering: " + vectorAction[1]);
         if (_vehicle != null)
         {
             _vehicle.Throttle = vectorAction[0];
@@ -58,8 +55,9 @@ public class CarRacerAgent : Agent
             collisionCount = 0;
         }
 
-        if(Time.time - _startTime > _maxEpisodeTime)
+        if (Time.time - _startTime > _maxEpisodeTime)
         {
+            Debug.Log("Max time exceeded");
             EndEpisode();
         }
 

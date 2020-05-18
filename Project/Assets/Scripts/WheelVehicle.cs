@@ -245,7 +245,6 @@ namespace VehicleBehaviour {
                 // Jump
                 jumping = GetInput(jumpInput) != 0;
             }
-            Debug.Log("Player action: throttle: " + throttle + ", steering: " + steering);
 
             // Direction
             foreach (WheelCollider wheel in turnWheel)
