@@ -118,7 +118,7 @@ namespace VehicleBehaviour {
 
         // When IsPlayer is false you can use this to control the steering
         float steering;
-        public float Steering { get{ return steering; } set{ steering = Mathf.Clamp(value, -1f, 1f); } } 
+        public float Steering { get{ return steering; } set{ steering = turnInputCurve.Evaluate(Mathf.Clamp(value, -1f, 1f)) * SteerAngle; } } 
 
         // When IsPlayer is false you can use this to control the throttle
         float throttle;

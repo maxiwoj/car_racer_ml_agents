@@ -1,3 +1,4 @@
+using System;
 using MLAgents;
 using MLAgents.Sensors;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class CarRacerAgent : Agent
     private WheelVehicle _vehicle;
     private float _startTime;
     private float _maxEpisodeTime = 900f;
+    private float _steering = 0.0f;
 
 
     [SerializeField]
@@ -38,6 +40,7 @@ public class CarRacerAgent : Agent
     {
         base.CollectObservations(sensor);
         sensor.AddObservation(body.velocity);
+        sensor.AddObservation(_steering);
     }
 
     public override void OnActionReceived(float[] vectorAction)
@@ -45,7 +48,7 @@ public class CarRacerAgent : Agent
         if (_vehicle != null)
         {
             _vehicle.Throttle = vectorAction[0];
-            _vehicle.Steering = vectorAction[1];
+            UpdateSteeringValue(vectorAction[1]);
         }
         
         if (!IsOnRoad() || collisionCount > this.MaxCollisionCount)
@@ -64,9 +67,34 @@ public class CarRacerAgent : Agent
         AddReward(-0.001f);
     }
 
+    private void UpdateSteeringValue(float steeringAction)
+    {
+        if (steeringAction > 0.5f && _steering < 1f)
+        {
+            _steering += 0.05f;
+        }
+        else if (Math.Abs(steeringAction) < 0.5f)
+        {
+            if (Math.Abs(_steering) < 0.05f)
+            {
+                _steering = 0f;
+            }
+            else
+            {
+                _steering += _steering < 0 ? 0.05f : -0.05f;
+            }
+        }
+        else if (steeringAction < -0.5f && _steering > -1f)
+        {
+            _steering -= 0.05f;
+        }
+
+        _vehicle.Steering = _steering;
+    }
+    
     private bool IsOnRoad()
     {
-        // TODO: Figure out to check if the vehicle is on the road 
+        // TODO: Figure out to check if the vehicle is on the road
         return true;
     }
     
