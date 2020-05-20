@@ -9,7 +9,7 @@ public class CarRacerAgent : Agent
     private Rigidbody body;
     private WheelVehicle _vehicle;
     private float _startTime;
-    private float _maxEpisodeTime = 900f;
+    private float _maxEpisodeTime = 500f;
     private float _steering = 0.0f;
 
 
@@ -64,14 +64,14 @@ public class CarRacerAgent : Agent
             EndEpisode();
         }
 
-        AddReward(-0.001f);
+        AddReward(-0.01f);
     }
 
     private void UpdateSteeringValue(float steeringAction)
     {
         if (steeringAction > 0.5f && _steering < 1f)
         {
-            _steering += 0.05f;
+            _steering += 0.1f;
         }
         else if (Math.Abs(steeringAction) < 0.5f)
         {
@@ -86,7 +86,7 @@ public class CarRacerAgent : Agent
         }
         else if (steeringAction < -0.5f && _steering > -1f)
         {
-            _steering -= 0.05f;
+            _steering -= 0.1f;
         }
 
         _vehicle.Steering = _steering;
@@ -102,7 +102,7 @@ public class CarRacerAgent : Agent
     {
         if (collision.gameObject.CompareTag("checkpoint"))
         {
-            AddReward(1f);
+            AddReward(0.8f);
         }
         else if (collision.gameObject.CompareTag("finish"))
         {
@@ -111,8 +111,7 @@ public class CarRacerAgent : Agent
         }
         else
         {
-            Debug.Log("Collision with " + collision.gameObject.tag);
-            AddReward(-0.5f);
+            AddReward(-0.8f);
             collisionCount++;
         }
     }
