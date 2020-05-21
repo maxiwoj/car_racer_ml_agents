@@ -14,6 +14,8 @@ public class CarRacerAgent : Agent
     private float _maxEpisodeTime = 300f;
     private float _steering = 0.0f;
 
+    private int _tillRouteGeneration = 500;
+
     private Vector3 positionLastUpdate;
 
 
@@ -40,6 +42,13 @@ public class CarRacerAgent : Agent
         _startTime = Time.time;
         positionLastUpdate = transform.position;
 
+        _tillRouteGeneration--;
+        if(_tillRouteGeneration == 0)
+        {
+            _tillRouteGeneration = 500;
+            Generator.GenerateTrack();
+        }
+
         foreach (var item in Generator.SavedCheckpoints)
         {
             item.GetComponent<BoxCollider>().enabled = true;
@@ -64,7 +73,7 @@ public class CarRacerAgent : Agent
         if (!IsOnRoad() || collisionCount > this.MaxCollisionCount)
         {
             SetReward(-3f);
-            _vehicle?.ResetPos();
+            EndEpisode();
             collisionCount = 0;
         }
 
@@ -81,18 +90,22 @@ public class CarRacerAgent : Agent
 
         float distanceThisFrame = Vector3.Distance(positionLastUpdate, transform.position);
 
-        if (distanceThisFrame > 0.025f)
+        float movementScore = 0.0f;
+
+        if (distanceThisFrame > 0.02f)
         {
-            AddReward( Mathf.Pow(distanceThisFrame, 1.25f) * 0.0002f);
+            movementScore += Mathf.Pow(distanceThisFrame, 1.25f) * 0.0002f;
         }
         else
         {
-            AddReward(-0.0001f);
+            movementScore += (-0.0005f);
         }
 
         positionLastUpdate = transform.position;
 
-        AddReward(-0.0001f);
+        movementScore += (-0.0001f);
+
+        AddReward(Mathf.Clamp(movementScore, -0.001f, 0.00001f));
     }
 
     private void UpdateSteeringValue(float steeringAction)
@@ -132,10 +145,7 @@ public class CarRacerAgent : Agent
     }
     
     private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(collision.gameObject.name);
-
-        
+    {        
         {
             AddReward(-0.5f);
             collisionCount++;
@@ -150,7 +160,7 @@ public class CarRacerAgent : Agent
         }
         else if (other.gameObject.CompareTag("finish"))
         {
-            AddReward(10f);
+            AddReward(12f);
             EndEpisode();
         }
     }

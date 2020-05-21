@@ -54,6 +54,9 @@ public class Generator : MonoBehaviour
     [ContextMenu("Generate")]
     public void GenerateTrack()
     {
+        Debug.Log("Generating");
+        SavedCheckpoints.Clear();
+
         int skipFirst = 1;
         foreach (Transform child in transform)
         {
@@ -72,6 +75,7 @@ public class Generator : MonoBehaviour
                 GameObject checkpoint = Instantiate(CheckpointTemplate, this.transform);
                 checkpoint.transform.position = CurrentNextPoint.position;
                 checkpoint.transform.rotation = CurrentNextPoint.rotation;
+                SavedCheckpoints.Add(checkpoint);
                 //checkpoint.transform.position = checkpoint.transform.position;// + new Vector3(0, 5, 0);
                 tillCheckpointCounter = 0;
             }
