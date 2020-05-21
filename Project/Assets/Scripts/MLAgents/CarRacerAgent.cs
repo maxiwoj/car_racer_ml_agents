@@ -58,7 +58,7 @@ public class CarRacerAgent : Agent
         
         if (!IsOnRoad() || collisionCount > this.MaxCollisionCount)
         {
-            SetReward(-1f);
+            SetReward(-3f);
             _vehicle?.ResetPos();
             collisionCount = 0;
         }
@@ -128,7 +128,7 @@ public class CarRacerAgent : Agent
     {
         if (other.gameObject.CompareTag("checkpoint"))
         {
-            AddReward(2.0f);
+            AddReward(0.5f);
         }
         else if (other.gameObject.CompareTag("finish"))
         {
