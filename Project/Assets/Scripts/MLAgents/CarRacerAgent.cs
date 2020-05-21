@@ -9,7 +9,7 @@ public class CarRacerAgent : Agent
     private Rigidbody body;
     private WheelVehicle _vehicle;
     private float _startTime;
-    private float _maxEpisodeTime = 500f;
+    private float _maxEpisodeTime = 300f;
     private float _steering = 0.0f;
 
 
@@ -34,6 +34,11 @@ public class CarRacerAgent : Agent
         this.collisionCount = 0;
         _vehicle?.ResetPos();
         _startTime = Time.time;
+
+        foreach (var item in FindObjectsOfType<RemoveCheckpointAfterPassing>())
+        {
+            item.GetComponent<BoxCollider>().enabled = true;
+        } 
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -58,13 +63,18 @@ public class CarRacerAgent : Agent
             collisionCount = 0;
         }
 
+        if(vectorAction[0] < 0)
+        {
+            AddReward(vectorAction[0] / 1.0f * 0.001f);
+        }
+
         if (Time.time - _startTime > _maxEpisodeTime)
         {
             Debug.Log("Max time exceeded");
             EndEpisode();
         }
 
-        AddReward(-0.01f);
+        AddReward(-0.0001f);
     }
 
     private void UpdateSteeringValue(float steeringAction)
@@ -94,25 +104,36 @@ public class CarRacerAgent : Agent
     
     private bool IsOnRoad()
     {
-        // TODO: Figure out to check if the vehicle is on the road
-        return true;
+        RaycastHit hit;
+        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - 0.15f, transform.position.z), -transform.up);
+        if(Physics.Raycast(new Vector3(transform.position.x, transform.position.y -0.15f, transform.position.z + 0.5f), -transform.up, 0.5f) && Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 0.15f, transform.position.z - 1.0f), -transform.up, 0.5f))
+        {
+            return true;
+        }
+        return false;
     }
     
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("checkpoint"))
+        Debug.Log(collision.gameObject.name);
+
+        
         {
-            AddReward(0.8f);
-        }
-        else if (collision.gameObject.CompareTag("finish"))
-        {
-            AddReward(1f);
-            EndEpisode();
-        }
-        else
-        {
-            AddReward(-0.8f);
+            AddReward(-0.5f);
             collisionCount++;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("checkpoint"))
+        {
+            AddReward(2.0f);
+        }
+        else if (other.gameObject.CompareTag("finish"))
+        {
+            AddReward(10f);
+            EndEpisode();
         }
     }
 }

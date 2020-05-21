@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3493815882184088138}
   - component: {fileID: 3493815882184088148}
   - component: {fileID: 3493815882184088139}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3493815882921133699}
   - component: {fileID: 3493815882921133698}
-  m_Layer: 0
+  - component: {fileID: 6061848846266402313}
+  m_Layer: 10
   m_Name: Checkpoint
   m_TagString: checkpoint
   m_Icon: {fileID: 0}
@@ -123,6 +124,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 20, y: 6, z: 1}
   m_Center: {x: 0, y: 3, z: 0.5}
+--- !u!114 &6061848846266402313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3493815882921133696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28197f8e2756de241af4e0ca5de931f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3493815883274676956
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,7 +148,7 @@ GameObject:
   - component: {fileID: 3493815883274676952}
   - component: {fileID: 3493815883274676959}
   - component: {fileID: 3493815883274676958}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,20 +235,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!64 &3493815883511908811
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3493815883512008552}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 95bd8bd11b8424c049e542afd42c38c4, type: 3}
 --- !u!1001 &3493815883511908808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -246,6 +245,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 95bd8bd11b8424c049e542afd42c38c4, type: 3}
       propertyPath: m_Name
       value: Tent
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 95bd8bd11b8424c049e542afd42c38c4, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 95bd8bd11b8424c049e542afd42c38c4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -305,12 +308,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95bd8bd11b8424c049e542afd42c38c4, type: 3}
---- !u!1 &3493815883512008552 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 95bd8bd11b8424c049e542afd42c38c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 3493815883511908808}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3493815883512304456 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 95bd8bd11b8424c049e542afd42c38c4,

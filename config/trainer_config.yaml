@@ -293,6 +293,6 @@ CarRacerBehavior:
     # curiosity:
         # strength: 0.01
         # gamma: 0.8
-    max_steps: 1000000
+    max_steps: 100000000
     
     
