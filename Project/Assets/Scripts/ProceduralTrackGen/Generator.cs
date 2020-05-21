@@ -28,6 +28,8 @@ public class Generator : MonoBehaviour
     public GameObject CheckpointTemplate;
     public GameObject FinaleTemplate;
 
+    public List<GameObject> SavedCheckpoints = new List<GameObject>();
+
     private int turnDeviation = 0;
 
     void Start()
@@ -137,6 +139,7 @@ public class Generator : MonoBehaviour
             if(i == TrackLength - 1)
             {
                 GameObject checkpoint = Instantiate(FinaleTemplate, this.transform);
+                SavedCheckpoints.Add(checkpoint);
                 checkpoint.transform.position = CurrentNextPoint.position;
                 checkpoint.transform.rotation = CurrentNextPoint.rotation;
                 //checkpoint.transform.position = checkpoint.transform.position;// + new Vector3(0, 5, 0);

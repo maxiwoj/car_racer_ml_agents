@@ -6,6 +6,8 @@ using VehicleBehaviour;
 
 public class CarRacerAgent : Agent
 {
+    public Generator Generator;
+
     private Rigidbody body;
     private WheelVehicle _vehicle;
     private float _startTime;
@@ -35,7 +37,7 @@ public class CarRacerAgent : Agent
         _vehicle?.ResetPos();
         _startTime = Time.time;
 
-        foreach (var item in FindObjectsOfType<RemoveCheckpointAfterPassing>())
+        foreach (var item in Generator.SavedCheckpoints)
         {
             item.GetComponent<BoxCollider>().enabled = true;
         } 

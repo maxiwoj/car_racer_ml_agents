@@ -251,6 +251,7 @@ MonoBehaviour:
     type: 3}
   FinaleTemplate: {fileID: 3493815882921133696, guid: 534ee6cc28415ce438070598de41879f,
     type: 3}
+  SavedCheckpoints: []
 --- !u!1001 &4305853397582651177
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -258,6 +259,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7214785826629152809}
     m_Modifications:
+    - target: {fileID: 684951241698724885, guid: 4896bd05f58692f42a00283954fa657c,
+        type: 3}
+      propertyPath: Generator
+      value: 
+      objectReference: {fileID: 7214785827215546477}
     - target: {fileID: 2028885250788960542, guid: 4896bd05f58692f42a00283954fa657c,
         type: 3}
       propertyPath: m_Enabled
@@ -381,7 +387,7 @@ PrefabInstance:
     - target: {fileID: 4623332092914145317, guid: 4896bd05f58692f42a00283954fa657c,
         type: 3}
       propertyPath: m_RayLength
-      value: 10
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4623332092914145317, guid: 4896bd05f58692f42a00283954fa657c,
         type: 3}
