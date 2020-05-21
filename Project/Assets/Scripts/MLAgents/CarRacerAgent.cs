@@ -14,6 +14,8 @@ public class CarRacerAgent : Agent
     private float _maxEpisodeTime = 300f;
     private float _steering = 0.0f;
 
+    private Vector3 positionLastUpdate;
+
 
     [SerializeField]
     private int maxCollisionCount;
@@ -36,6 +38,7 @@ public class CarRacerAgent : Agent
         this.collisionCount = 0;
         _vehicle?.ResetPos();
         _startTime = Time.time;
+        positionLastUpdate = transform.position;
 
         foreach (var item in Generator.SavedCheckpoints)
         {
@@ -75,6 +78,19 @@ public class CarRacerAgent : Agent
             Debug.Log("Max time exceeded");
             EndEpisode();
         }
+
+        float distanceThisFrame = Vector3.Distance(positionLastUpdate, transform.position);
+
+        if (distanceThisFrame > 0.025f)
+        {
+            AddReward( Mathf.Pow(distanceThisFrame, 1.25f) * 0.0002f);
+        }
+        else
+        {
+            AddReward(-0.0001f);
+        }
+
+        positionLastUpdate = transform.position;
 
         AddReward(-0.0001f);
     }
@@ -130,7 +146,7 @@ public class CarRacerAgent : Agent
     {
         if (other.gameObject.CompareTag("checkpoint"))
         {
-            AddReward(0.5f);
+            AddReward(0.75f);
         }
         else if (other.gameObject.CompareTag("finish"))
         {

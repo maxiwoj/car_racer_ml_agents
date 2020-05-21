@@ -290,9 +290,9 @@ CarRacerBehavior:
     normalize: true
     trainer: ppo
     learning_rate_schedule: linear
-    # curiosity:
-        # strength: 0.01
-        # gamma: 0.8
+    curiosity:
+        strength: 0.01
+        gamma: 0.8
     max_steps: 100000000
     
     
