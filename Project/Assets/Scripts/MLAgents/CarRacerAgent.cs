@@ -14,7 +14,8 @@ public class CarRacerAgent : Agent
     private float _maxEpisodeTime = 300f;
     private float _steering = 0.0f;
 
-    private int _tillRouteGeneration = 500;
+    private int _tillRouteGeneration = 100;
+    private readonly int _stepsToGeneration = 100;
 
     private Vector3 positionLastUpdate;
 
@@ -35,17 +36,20 @@ public class CarRacerAgent : Agent
         _vehicle = GetComponent<WheelVehicle>();
     }
 
+
     public override void OnEpisodeBegin()
     {
-        this.collisionCount = 0;
+        collisionCount = 0;
         _vehicle?.ResetPos();
         _startTime = Time.time;
         positionLastUpdate = transform.position;
 
         _tillRouteGeneration--;
-        if(_tillRouteGeneration == 0)
+        if (_tillRouteGeneration == 0)
         {
-            _tillRouteGeneration = 500;
+            _tillRouteGeneration = _stepsToGeneration;
+            Generator.TrackLength = (int)Academy.Instance.FloatProperties.GetPropertyWithDefault("track_length", 10);
+            Generator.TurnRate = Academy.Instance.FloatProperties.GetPropertyWithDefault("turn_rate", 0.07f);
             Generator.GenerateTrack();
         }
 
@@ -70,16 +74,16 @@ public class CarRacerAgent : Agent
             UpdateSteeringValue(vectorAction[1]);
         }
         
-        if (!IsOnRoad() || collisionCount > this.MaxCollisionCount)
+        if (!IsOnRoad() || collisionCount > MaxCollisionCount)
         {
-            SetReward(-3f);
+            SetReward(-3f / 10.0f);
             EndEpisode();
             collisionCount = 0;
         }
 
         if(vectorAction[0] < 0)
         {
-            AddReward(vectorAction[0] / 1.0f * 0.001f);
+            AddReward(vectorAction[0] / 1.0f * 0.001f / 10.0f);
         }
 
         if (Time.time - _startTime > _maxEpisodeTime)
@@ -94,50 +98,53 @@ public class CarRacerAgent : Agent
 
         if (distanceThisFrame > 0.02f)
         {
-            movementScore += Mathf.Pow(distanceThisFrame, 1.25f) * 0.0002f;
+            movementScore += Mathf.Pow(distanceThisFrame, 1.25f) * 0.0002f / 10.0f;
         }
         else
         {
-            movementScore += (-0.0005f);
+            movementScore += (-0.0005f / 10.0f);
         }
 
         positionLastUpdate = transform.position;
 
-        movementScore += (-0.0001f);
+        movementScore += (-0.0001f / 10.0f);
 
-        AddReward(Mathf.Clamp(movementScore, -0.001f, 0.00001f));
+        AddReward(Mathf.Clamp(movementScore, -0.001f, 0.00001f) / 10.0f);
     }
 
     private void UpdateSteeringValue(float steeringAction)
     {
-        if (steeringAction > 0.5f && _steering < 1f)
-        {
-            _steering += 0.1f;
-        }
-        else if (Math.Abs(steeringAction) < 0.5f)
-        {
-            if (Math.Abs(_steering) < 0.05f)
-            {
-                _steering = 0f;
-            }
-            else
-            {
-                _steering += _steering < 0 ? 0.05f : -0.05f;
-            }
-        }
-        else if (steeringAction < -0.5f && _steering > -1f)
-        {
-            _steering -= 0.1f;
-        }
-
-        _vehicle.Steering = _steering;
+        // if (steeringAction > 0.5f && _steering < 1f)
+        // {
+        //     _steering += 0.1f;
+        // }
+        // else if (Math.Abs(steeringAction) < 0.5f)
+        // {
+        //     if (Math.Abs(_steering) < 0.05f)
+        //     {
+        //         _steering = 0f;
+        //     }
+        //     else
+        //     {
+        //         _steering += _steering < 0 ? 0.05f : -0.05f;
+        //     }
+        // }
+        // else if (steeringAction < -0.5f && _steering > -1f)
+        // {
+        //     _steering -= 0.1f;
+        // }
+        // _vehicle.Steering = _steering;
+        _vehicle.Steering = steeringAction;
     }
     
     private bool IsOnRoad()
     {
-        RaycastHit hit;
-        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - 0.15f, transform.position.z), -transform.up);
-        if(Physics.Raycast(new Vector3(transform.position.x, transform.position.y -0.15f, transform.position.z + 0.5f), -transform.up, 0.5f) && Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 0.15f, transform.position.z - 1.0f), -transform.up, 0.5f))
+        //RaycastHit hit;
+        //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - 0.15f, transform.position.z), -transform.up);
+        if(    Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 0.15f, transform.position.z + 0.5f), -transform.up, 0.5f) 
+            && Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 0.15f, transform.position.z - 1.0f), -transform.up, 0.5f)
+            && Physics.Raycast(new Vector3(transform.position.x + 0.5f, transform.position.y - 0.15f, transform.position.z), -transform.up, 0.5f)
+            && Physics.Raycast(new Vector3(transform.position.x - 0.5f, transform.position.y - 0.15f, transform.position.z), -transform.up, 0.5f))
         {
             return true;
         }
@@ -146,21 +153,19 @@ public class CarRacerAgent : Agent
     
     private void OnCollisionEnter(Collision collision)
     {        
-        {
-            AddReward(-0.5f);
-            collisionCount++;
-        }
+        AddReward(-0.5f / 10.0f);
+        collisionCount++;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("checkpoint"))
         {
-            AddReward(0.75f);
+            AddReward(0.75f/10.0f);
         }
         else if (other.gameObject.CompareTag("finish"))
         {
-            AddReward(12f);
+            AddReward(1f);
             EndEpisode();
         }
     }

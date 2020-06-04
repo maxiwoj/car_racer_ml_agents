@@ -1,0 +1,8 @@
+CarRacerBehavior:
+  measure: progress
+  thresholds: [0.1, 0.3, 0.5, 0.8]
+  min_lesson_length: 100
+  signal_smoothing: true
+  parameters:
+    track_length: [10.0, 15.0, 20.0, 25.0, 30.0]
+    turn_rate: [0.07, 0.1, 0.3, 0.5, 0.8]
