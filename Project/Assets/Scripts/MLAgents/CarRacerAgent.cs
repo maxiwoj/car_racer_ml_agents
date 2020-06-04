@@ -76,14 +76,14 @@ public class CarRacerAgent : Agent
         
         if (!IsOnRoad() || collisionCount > MaxCollisionCount)
         {
-            SetReward(-3f / 10.0f);
+            SetReward(-2.5f);
             EndEpisode();
             collisionCount = 0;
         }
 
         if(vectorAction[0] < 0)
         {
-            AddReward(vectorAction[0] / 1.0f * 0.001f / 10.0f);
+            AddReward(vectorAction[0] / 1.0f * 0.001f );
         }
 
         if (Time.time - _startTime > _maxEpisodeTime)
@@ -96,20 +96,20 @@ public class CarRacerAgent : Agent
 
         float movementScore = 0.0f;
 
-        if (distanceThisFrame > 0.02f)
+        if (distanceThisFrame > 0.03f)
         {
-            movementScore += Mathf.Pow(distanceThisFrame, 1.25f) * 0.0002f / 10.0f;
+            movementScore += Mathf.Pow(distanceThisFrame, 1.25f) * 0.0003f;
         }
         else
         {
-            movementScore += (-0.0005f / 10.0f);
+            movementScore += (-0.0005f);
         }
 
         positionLastUpdate = transform.position;
 
-        movementScore += (-0.0001f / 10.0f);
+        movementScore += (-0.0001f);
 
-        AddReward(Mathf.Clamp(movementScore, -0.001f, 0.00001f) / 10.0f);
+        AddReward(Mathf.Clamp(movementScore, -0.001f, 0.00001f));
     }
 
     private void UpdateSteeringValue(float steeringAction)
@@ -153,7 +153,7 @@ public class CarRacerAgent : Agent
     
     private void OnCollisionEnter(Collision collision)
     {        
-        AddReward(-0.5f / 10.0f);
+        AddReward(-0.5f);
         collisionCount++;
     }
 
@@ -161,11 +161,11 @@ public class CarRacerAgent : Agent
     {
         if (other.gameObject.CompareTag("checkpoint"))
         {
-            AddReward(0.75f/10.0f);
+            AddReward(1.0f);
         }
         else if (other.gameObject.CompareTag("finish"))
         {
-            AddReward(1f);
+            AddReward(8f);
             EndEpisode();
         }
     }
