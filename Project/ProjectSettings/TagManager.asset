@@ -30,6 +30,9 @@ TagManager:
   - purpleAgent
   - purpleGoal
   - rail
+  - obstacle
+  - checkpoint
+  - finish
   layers:
   - Default
   - TransparentFX
@@ -41,7 +44,7 @@ TagManager:
   - 
   - invisible
   - border
-  - 
+  - checkpoint
   - 
   - 
   - 

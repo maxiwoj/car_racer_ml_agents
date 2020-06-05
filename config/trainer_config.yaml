@@ -285,3 +285,21 @@ Basic:
         extrinsic:
             strength: 1.0
             gamma: 0.9
+            
+CarRacerBehavior:
+    normalize: true
+    trainer: ppo
+    learning_rate_schedule: linear
+    curiosity:
+        strength: 0.03
+        gamma: 0.8
+    max_steps: 35000000
+    beta: 5e-3
+    hidden_units: 512
+    batch_size: 3072
+    buffer_size: 30720
+    epsilon: 0.1
+    num_layers: 3
+    num_epoch: 8
+    
+    

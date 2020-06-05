@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 5262120286601873996}
   m_Layer: 0
   m_Name: Capsule (2)
-  m_TagString: Untagged
+  m_TagString: obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -657,7 +657,7 @@ GameObject:
   - component: {fileID: 8980210802280369108}
   m_Layer: 0
   m_Name: Capsule (6)
-  m_TagString: Untagged
+  m_TagString: obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -751,7 +751,7 @@ GameObject:
   - component: {fileID: 4604932244570218320}
   m_Layer: 0
   m_Name: Capsule (4)
-  m_TagString: Untagged
+  m_TagString: obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -965,7 +965,7 @@ GameObject:
   - component: {fileID: 6506600377442318653}
   m_Layer: 0
   m_Name: Capsule (5)
-  m_TagString: Untagged
+  m_TagString: obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1089,7 +1089,7 @@ GameObject:
   - component: {fileID: 3186581890171485381}
   m_Layer: 0
   m_Name: Capsule (7)
-  m_TagString: Untagged
+  m_TagString: obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1183,7 +1183,7 @@ GameObject:
   - component: {fileID: 8799529311626277730}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1307,7 +1307,7 @@ GameObject:
   - component: {fileID: 3282877009485980062}
   m_Layer: 0
   m_Name: Capsule (1)
-  m_TagString: Untagged
+  m_TagString: obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1461,7 +1461,7 @@ GameObject:
   - component: {fileID: 6785654806900505199}
   m_Layer: 0
   m_Name: Capsule (3)
-  m_TagString: Untagged
+  m_TagString: obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1627,6 +1627,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cone (45)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.7396
@@ -1699,6 +1703,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_Name
       value: Cone (50)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1848,6 +1856,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cone (40)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.3366
@@ -1920,6 +1932,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_Name
       value: Cone (48)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1994,6 +2010,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cone (55)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.5410004
@@ -2066,6 +2086,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_Name
       value: Cone (43)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2140,6 +2164,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cone (44)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.7396
@@ -2212,6 +2240,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_Name
       value: Cone (42)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2361,6 +2393,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cone (56)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.5410004
@@ -2433,6 +2469,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_Name
       value: Cone (46)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2507,6 +2547,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cone (53)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.5410004
@@ -2579,6 +2623,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_Name
       value: Cone (41)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2653,6 +2701,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cone (39)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.3366
@@ -2725,6 +2777,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_Name
       value: Cone (54)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2799,6 +2855,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cone (51)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.138
@@ -2872,6 +2932,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cone (47)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.7396
@@ -2944,6 +3008,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_Name
       value: Cone (57)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3093,6 +3161,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cone (49)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.138
@@ -3166,6 +3238,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cone (38)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.3366
@@ -3238,6 +3314,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_Name
       value: Cone (52)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
+      propertyPath: m_TagString
+      value: obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b336add24760dc44cb3ded985727ab20, type: 3}
       propertyPath: m_LocalPosition.x

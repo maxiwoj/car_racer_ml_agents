@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5816082216562088948}
   - component: {fileID: 5816082216560761812}
   - component: {fileID: 5816082216559794452}
-  - component: {fileID: 693662368563283077}
+  - component: {fileID: 7575903060700208283}
   m_Layer: 0
   m_Name: roadCornerLargerR
   m_TagString: Untagged
@@ -92,8 +92,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &693662368563283077
-BoxCollider:
+--- !u!64 &7575903060700208283
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,9 +102,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 30, y: 0.2, z: 30}
-  m_Center: {x: 15, y: 0.1, z: 15}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 3b6f5f909be8e4bd0af997c2c6779d22, type: 3}
 --- !u!1 &5816082217714699509
 GameObject:
   m_ObjectHideFlags: 0
