@@ -37,7 +37,6 @@ public class Generator : MonoBehaviour
         GenerateTrack();
     }
 
-
     private GameObject[] UseRightTurn()
     {
         turnDeviation++; 
@@ -70,34 +69,39 @@ public class Generator : MonoBehaviour
 
         for (int i = 0, tillCheckpointCounter = 0; i < TrackLength; i++, tillCheckpointCounter++)
         {
-            if(tillCheckpointCounter == CheckpointEveryNSegments && i != TrackLength-1)
+            if (ShouldNowBeCheckpoint(i, tillCheckpointCounter))
             {
-                GameObject checkpoint = Instantiate(CheckpointTemplate, this.transform);
-                checkpoint.transform.position = CurrentNextPoint.position;
-                checkpoint.transform.rotation = CurrentNextPoint.rotation;
-                SavedCheckpoints.Add(checkpoint);
-                //checkpoint.transform.position = checkpoint.transform.position;// + new Vector3(0, 5, 0);
-                tillCheckpointCounter = 0;
+                tillCheckpointCounter = CreateCheckpointGate(CurrentNextPoint);
             }
 
             float RandomRoll = Random.Range(0.0f, 1.0f + TurnRate + RampRate + SpecialRate);
 
             GameObject[] templateSetToUse;
+            templateSetToUse = DrawRandomPathSegmentTemplate(RandomRoll);
 
-            if (RandomRoll <= TurnRate)
+            var selectedSegment = templateSetToUse[Random.Range(0, templateSetToUse.Length)];
+
+            GameObject createdSegment = Instantiate(selectedSegment, this.transform);
+            var inputTransform = createdSegment.transform.Find("InputPoint");
+            var outputTransform = createdSegment.transform.Find("OutputPoint");
+
+            float rotationAngle = GetCorrectOrientation(CurrentNextPoint, createdSegment, inputTransform);
+
+            // Get next attachment point
+            GetNextAttachmentPoint(CurrentNextPoint, createdSegment, inputTransform, rotationAngle);
+            CurrentNextPoint = outputTransform;
+            CreateFinishGate(CurrentNextPoint, i);
+        }
+    }
+
+    private GameObject[] DrawRandomPathSegmentTemplate(float RandomRoll)
+    {
+        GameObject[] templateSetToUse;
+        if (RandomRoll <= TurnRate)
+        {
+            if (turnDeviation == 0)
             {
-                if(turnDeviation == 0)
-                {
-                    if(Random.Range(0.0f, 1.0f) < 0.5f)
-                    {
-                        templateSetToUse = UseRightTurn();
-                    }
-                    else
-                    {
-                        templateSetToUse = UseLeftTurn();
-                    }
-                }
-                else if(turnDeviation < 0)
+                if (Random.Range(0.0f, 1.0f) < 0.5f)
                 {
                     templateSetToUse = UseRightTurn();
                 }
@@ -106,49 +110,72 @@ public class Generator : MonoBehaviour
                     templateSetToUse = UseLeftTurn();
                 }
             }
-            else if(RandomRoll <= TurnRate+RampRate)
+            else if (turnDeviation < 0)
             {
-                templateSetToUse = RampTemplateSegments;
-            }
-            else if(RandomRoll <= TurnRate+RampRate+SpecialRate)
-            {
-                templateSetToUse = SpecialTemplateSegments;
+                templateSetToUse = UseRightTurn();
             }
             else
             {
-                templateSetToUse = StraightTemplateSegments;
+                templateSetToUse = UseLeftTurn();
             }
+        }
+        else if (RandomRoll <= TurnRate + RampRate)
+        {
+            templateSetToUse = RampTemplateSegments;
+        }
+        else if (RandomRoll <= TurnRate + RampRate + SpecialRate)
+        {
+            templateSetToUse = SpecialTemplateSegments;
+        }
+        else
+        {
+            templateSetToUse = StraightTemplateSegments;
+        }
 
-            var selectedSegment = templateSetToUse[Random.Range(0, templateSetToUse.Length)];
+        return templateSetToUse;
+    }
 
-            GameObject createdSegment = Instantiate(selectedSegment, this.transform);
-            var inputTransform = createdSegment.transform.Find("InputPoint");
-            var outputTransform = createdSegment.transform.Find("OutputPoint");
+    private bool ShouldNowBeCheckpoint(int i, int tillCheckpointCounter)
+    {
+        return tillCheckpointCounter == CheckpointEveryNSegments && i != TrackLength - 1;
+    }
 
-            float rotationAngle = Vector3.SignedAngle(createdSegment.transform.forward, CurrentNextPoint.transform.forward, Vector3.up);
+    private int CreateCheckpointGate(Transform CurrentNextPoint)
+    {
+        int tillCheckpointCounter;
+        GameObject checkpoint = Instantiate(CheckpointTemplate, this.transform);
+        checkpoint.transform.position = CurrentNextPoint.position;
+        checkpoint.transform.rotation = CurrentNextPoint.rotation;
+        SavedCheckpoints.Add(checkpoint);
+        //checkpoint.transform.position = checkpoint.transform.position;// + new Vector3(0, 5, 0);
+        tillCheckpointCounter = 0;
+        return tillCheckpointCounter;
+    }
 
-            Vector3 rotationOffset = inputTransform.InverseTransformDirection(CurrentNextPoint.transform.forward);
-            createdSegment.transform.rotation = Quaternion.LookRotation(rotationOffset, Vector3.up);
-
-           
-
-            Vector3 inputOffset = inputTransform.InverseTransformPoint(createdSegment.transform.position);
-            inputOffset = Quaternion.AngleAxis(rotationAngle, Vector3.up) * inputOffset;
-
-            createdSegment.transform.position = CurrentNextPoint.position + inputOffset;
-
-
-            CurrentNextPoint = outputTransform;
-
-            if(i == TrackLength - 1)
-            {
-                GameObject checkpoint = Instantiate(FinaleTemplate, this.transform);
-                SavedCheckpoints.Add(checkpoint);
-                checkpoint.transform.position = CurrentNextPoint.position;
-                checkpoint.transform.rotation = CurrentNextPoint.rotation;
-                //checkpoint.transform.position = checkpoint.transform.position;// + new Vector3(0, 5, 0);
-            }
+    private void CreateFinishGate(Transform CurrentNextPoint, int i)
+    {
+        if (i == TrackLength - 1)
+        {
+            GameObject checkpoint = Instantiate(FinaleTemplate, this.transform);
+            SavedCheckpoints.Add(checkpoint);
+            checkpoint.transform.position = CurrentNextPoint.position;
+            checkpoint.transform.rotation = CurrentNextPoint.rotation;
+            //checkpoint.transform.position = checkpoint.transform.position;// + new Vector3(0, 5, 0);
         }
     }
 
+    private static float GetCorrectOrientation(Transform CurrentNextPoint, GameObject createdSegment, Transform inputTransform)
+    {
+        float rotationAngle = Vector3.SignedAngle(createdSegment.transform.forward, CurrentNextPoint.transform.forward, Vector3.up);
+        Vector3 rotationOffset = inputTransform.InverseTransformDirection(CurrentNextPoint.transform.forward);
+        createdSegment.transform.rotation = Quaternion.LookRotation(rotationOffset, Vector3.up);
+        return rotationAngle;
+    }
+
+    private static void GetNextAttachmentPoint(Transform CurrentNextPoint, GameObject createdSegment, Transform inputTransform, float rotationAngle)
+    {
+        Vector3 inputOffset = inputTransform.InverseTransformPoint(createdSegment.transform.position);
+        inputOffset = Quaternion.AngleAxis(rotationAngle, Vector3.up) * inputOffset;
+        createdSegment.transform.position = CurrentNextPoint.position + inputOffset;
+    }
 }
