@@ -1,6 +1,8 @@
 # Car Racer with Unity ML-Agents
 ## Setup
-To setup the project follow the [installation guide](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Getting-Started.md) on the official ML-Agents repository
+To setup the project follow the [installation guide](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Getting-Started.md) on the official ML-Agents repository. During the installation use the versions of the tools specified below:
+- Unity 2019.3
+- mlagents 0.15.1
 ## Usage
 ### Training
 To train the model use the command `mlagents-learn`
@@ -12,7 +14,7 @@ for example, to train the model with one of the provided configs:
 $ mlagents-learn config/car_racer_ppo_config4.yaml --run-id=config4_1 --train --curriculum=config/curricula/car_racer.yaml
 ```
 ### Loading an existing model
-
+To see the already trained model just open the scene `ProcGenTest` in Unity and press play. This should load the trained model and you should see cars driving on the roads
 ### Using tensorboard
 In the main project directory run:
 ```bash
