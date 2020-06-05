@@ -1,4 +1,7 @@
 # Car Racer with Unity ML-Agents
+## Preview
+![](preview.gif)
+
 ## Setup
 To setup the project follow the [installation guide](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Getting-Started.md) on the official ML-Agents repository. During the installation use the versions of the tools specified below:
 - Unity 2019.3
