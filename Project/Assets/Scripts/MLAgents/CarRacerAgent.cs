@@ -14,8 +14,8 @@ public class CarRacerAgent : Agent
     private float _maxEpisodeTime = 300f;
     private float _steering = 0.0f;
 
-    private int _tillRouteGeneration = 100;
-    private readonly int _stepsToGeneration = 100;
+    private int _tillRouteGeneration = 5;
+    private readonly int _stepsToGeneration = 5;
 
     private Vector3 positionLastUpdate;
 
@@ -44,7 +44,6 @@ public class CarRacerAgent : Agent
         _startTime = Time.time;
         positionLastUpdate = transform.position;
 
-        _tillRouteGeneration--;
         if (_tillRouteGeneration == 0)
         {
             _tillRouteGeneration = _stepsToGeneration;
@@ -76,14 +75,14 @@ public class CarRacerAgent : Agent
         
         if (!IsOnRoad() || collisionCount > MaxCollisionCount)
         {
-            SetReward(-2.5f);
+            AddReward(-2.75f);
             EndEpisode();
             collisionCount = 0;
         }
 
-        if(vectorAction[0] < 0)
+        if(vectorAction[0] < 0 && body.velocity.magnitude < 10)
         {
-            AddReward(vectorAction[0] / 1.0f * 0.001f );
+            AddReward(vectorAction[0] * 0.008f );
         }
 
         if (Time.time - _startTime > _maxEpisodeTime)
@@ -96,24 +95,32 @@ public class CarRacerAgent : Agent
 
         float movementScore = 0.0f;
 
-        if (distanceThisFrame > 0.03f)
-        {
-            movementScore += Mathf.Pow(distanceThisFrame, 1.25f) * 0.0003f;
-        }
-        else
-        {
-            movementScore += (-0.0005f);
-        }
+        movementScore += Mathf.Pow(Mathf.Clamp(distanceThisFrame - 0.03f, -0.05f, 0.015f), 3f) * 0.06f;
 
         positionLastUpdate = transform.position;
 
-        movementScore += (-0.0001f);
+        movementScore += (-0.00001f);
 
-        AddReward(Mathf.Clamp(movementScore, -0.001f, 0.00001f));
+        AddReward(Mathf.Clamp(movementScore, -0.01f, 0.005f));
     }
 
     private void UpdateSteeringValue(float steeringAction)
     {
+        if (steeringAction > _steering + 0.1f)
+        {
+            _steering += 0.1f;
+        }
+        else if (steeringAction < _steering - 0.1f)
+        {
+            _steering -= 0.1f;
+        }
+        else
+        {
+            _steering = steeringAction;
+        }
+        Mathf.Clamp(_steering, -1f, 1f);
+        _vehicle.Steering = _steering;
+
         // if (steeringAction > 0.5f && _steering < 1f)
         // {
         //     _steering += 0.1f;
@@ -134,9 +141,9 @@ public class CarRacerAgent : Agent
         //     _steering -= 0.1f;
         // }
         // _vehicle.Steering = _steering;
-        _vehicle.Steering = steeringAction;
+        // _vehicle.Steering = steeringAction;
     }
-    
+
     private bool IsOnRoad()
     {
         //RaycastHit hit;
@@ -161,10 +168,11 @@ public class CarRacerAgent : Agent
     {
         if (other.gameObject.CompareTag("checkpoint"))
         {
-            AddReward(1.0f);
+            AddReward(1.25f);
         }
         else if (other.gameObject.CompareTag("finish"))
         {
+            _tillRouteGeneration--;
             AddReward(8f);
             EndEpisode();
         }
